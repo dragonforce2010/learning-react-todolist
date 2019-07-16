@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './todoList.css'
 import TodoItem from './todoItem'
+import axios from 'axios'
 
 class TodoList extends Component {
   constructor(props) {
@@ -15,6 +16,13 @@ class TodoList extends Component {
     this.handleInputChange = this.handleInputChange.bind(this) 
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount() {
+    // axios.get('/api/todolist')
+    //   .then(() => { alert('Success')})
+    //   .catch(() => { alert('Error')})
+  }
+
   render() {
     return (
       <Fragment>
@@ -23,7 +31,8 @@ class TodoList extends Component {
           <input  className='input'
                   id="inputArea"
                   value={this.state.inputValue}
-                  onChange={ this.handleInputChange} />
+                  onChange={ this.handleInputChange} 
+                  ref={(input) => {this.input = input}}/>
         <button onClick={ this.handleSubmit}>提交</button>
         </div>
         <ul>
@@ -46,9 +55,8 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
-    const value = e.target.value
     this.setState(() => ({
-      inputValue: value
+      inputValue: this.input.value
     }));
   }
 

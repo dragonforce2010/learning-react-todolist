@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 import TodoList from './TodoList'
+import Comp1 from './Comp1';
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <TodoList></TodoList>
+    <Fragment>
+      <TodoList></TodoList>
+      <Comp1></Comp1>
+    </Fragment>
   );
 }
 
