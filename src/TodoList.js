@@ -12,17 +12,19 @@ class TodoList extends Component {
         'Learning Go'
       ]
     }
+    this.handleInputChange = this.handleInputChange.bind(this) 
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   render() {
     return (
       <Fragment>
         <div>
-          <label htmlFor="inputArea">Please Input your tasks</label>
+          <label htmlFor="inputArea">Add a task </label>
           <input  className='input'
                   id="inputArea"
                   value={this.state.inputValue}
-                  onChange={ this.handleInputChange.bind(this)} />
-        <button onClick={ this.handleSubmit.bind(this)}>提交</button>
+                  onChange={ this.handleInputChange} />
+        <button onClick={ this.handleSubmit}>提交</button>
         </div>
         <ul>
           {
@@ -33,7 +35,7 @@ class TodoList extends Component {
                     onClick={ this.handleItemDelete.bind(this, index)}
                     dangerouslySetInnerHTML={{__html: item}}> 
                     </li>*/}
-                    <TodoItem/>
+                    <TodoItem item={item} index={index} deleteItem={this.handleItemDelete.bind(this)}/>
                 </div>
               )
             })
@@ -44,24 +46,25 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    })    
+    const value = e.target.value
+    this.setState(() => ({
+      inputValue: value
+    }));
   }
 
   handleSubmit() {
-    this.setState({
-      todoList: [...this.state.todoList, this.state.inputValue],
+    this.setState((prevState) => ({
+      todoList: [...prevState.todoList, prevState.inputValue],
       inputValue: ''
-    })
+    }))
   }
 
   handleItemDelete(index) {
     const todoList = [...this.state.todoList]
     todoList.splice(index, 1)
-    this.setState({
+    this.setState(() => ({
       todoList: todoList
-    })
+    }))
   }
 }
 
