@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import TodoList from './TodoList'
+import TodoList2 from './TodoList2'
 import Comp1 from './Comp1';
 
 function App() {
@@ -23,10 +24,11 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <Fragment>
-      <TodoList></TodoList>
-      <Comp1></Comp1>
-    </Fragment>
+    // <Fragment>
+    //   <TodoList></TodoList>
+    //   <Comp1></Comp1>
+    // </Fragment>
+    <TodoList2></TodoList2>
   );
 }
 

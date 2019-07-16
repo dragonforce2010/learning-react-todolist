@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import './Comp1.css'
+import { CSSTransition } from 'react-transition-group'
 
 class Comp1 extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      show: true
+      show: false
     }
 
     this.handleToggle = this.handleToggle.bind(this)
@@ -14,7 +15,15 @@ class Comp1 extends Component {
   render() {
     return (
       <Fragment>
-        <div className={this.state.show ? 'show' : 'hide'}>hello</div>
+        <CSSTransition
+          classNames='my-node'
+          in={this.state.show}
+          timeout={1000}
+          unmountOnExit
+          appear={true}
+        >
+          <div>hello</div>
+        </CSSTransition>
         <button onClick={this.handleToggle}>toggle</button>
       </Fragment>
     )
