@@ -3,7 +3,6 @@ import 'antd/dist/antd.css'
 import store from './store'
 import * as action from './actionCreators'
 import TodoListUI from './TodoListUI'
-import axios from 'axios'
 class TodoList extends Component {
   constructor(props) {
     super(props)
@@ -17,17 +16,7 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    // axios.get('/list').then((res) => {
-    //   const data = res.data;
-    //   store.dispatch(action.getInitListAction(data))
-    // })
-    // const data = [
-    //   'Learn React',
-    //   'Learn Electron',
-    //   'Learn GO'
-    // ];
-    // store.dispatch(action.getInitListAction(data))
-    store.dispatch(action.getTodoList())
+    store.dispatch(action.getInitList())
   }
 
   render() {
