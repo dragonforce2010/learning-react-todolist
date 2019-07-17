@@ -1,35 +1,61 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
-import { Input, Button, List, Typography } from 'antd'
+import { Input, Button, List } from 'antd'
+import store from './store'
+import * as action from './actionCreators'
+class TodoList2 extends Component {
+  constructor(props) {
+    super(props)
+    this.state = store.getState()
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleStoreChange = this.handleStoreChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-]
+    store.subscribe(this.handleStoreChange)
+  }
 
-class TodoList extends Component {
   render() {
     return (
       <div style={{margin: '10px'}}>
-        <Input placeholder='todo info' style={{ width: '300px', margin: '10px'}}></Input>
-        <Button type='primary'>Search</Button>
+        <Input value={ this.state.inputValue } 
+               placeholder='todo info' 
+               style={{ width: '300px', margin: '10px'}}
+               onChange={this.handleInputChange}>
+        </Input>
+        <Button 
+              type='primary'
+              onClick={this.handleClick}
+        >
+          Search
+        </Button>
         <List 
               style={{margin: '10px', width: '300px'}} 
-              header={<div>Header</div>}
-              footer={<div>Footer</div>}
               bordered
-              dataSource={data}
-              renderItem={item => (
-                <List.Item>
-                  <Typography.Text mark></Typography.Text> {item}
+              dataSource={ this.state.listData }
+              renderItem={(item,index) => (
+                <List.Item onClick={ this.handleItemDelete.bind(this, index)}>
+                  {item}
                 </List.Item>
               )}/>
       </div>
     )
   }
+
+  handleInputChange(e) {
+    store.dispatch(action.getInputChangeAction(e.target.value))
+  } 
+
+  handleStoreChange() {
+    this.setState(store.getState())
+  }
+
+  handleClick() {
+    store.dispatch(action.getAddTodoItemAction())
+  }
+
+  handleItemDelete(index) {
+    store.dispatch(action.getDeleteTodoItemAction(index))
+  }
 }
 
-export default TodoList
+export default TodoList2
