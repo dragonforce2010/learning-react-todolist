@@ -1,12 +1,13 @@
-import { DELETE_TODO_ITEM, ADD_TODO_ITEM, CHANGE_INPUT_VALUE } from './actionTypes'
+import {
+  DELETE_TODO_ITEM,
+  ADD_TODO_ITEM,
+  CHANGE_INPUT_VALUE,
+  INIT_LIST,
+} from './actionTypes'
 
 const defaultState = {
   inputValue: 'please input a task',
-  listData: [
-    1,
-    2,
-    3,
-  ]
+  listData: []
 }
 
 // reducer可以接受state，但是不能修改state
@@ -15,8 +16,8 @@ export default (state = defaultState, action) => {
     const newState = JSON.parse(JSON.stringify(state))
     newState.inputValue = action.value
     return newState
-  } 
-  
+  }
+
   if (action.type === ADD_TODO_ITEM) {
     const newState = JSON.parse(JSON.stringify(state))
     newState.listData.push(newState.inputValue)
@@ -30,6 +31,12 @@ export default (state = defaultState, action) => {
     return newState
   }
 
+  if (action.type === INIT_LIST) {
+    const newState = JSON.parse(JSON.stringify(state))
+    newState.listData = action.data
+    return newState
+  }
+
+
   return state
 }
-
