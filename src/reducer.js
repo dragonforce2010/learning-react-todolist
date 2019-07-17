@@ -1,8 +1,11 @@
 import { DELETE_TODO_ITEM, ADD_TODO_ITEM, CHANGE_INPUT_VALUE } from './actionTypes'
 
 const defaultState = {
-  inputValue: '',
+  inputValue: 'please input a task',
   listData: [
+    1,
+    2,
+    3,
   ]
 }
 

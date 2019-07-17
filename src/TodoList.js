@@ -1,78 +1,46 @@
-import React, { Component, Fragment } from 'react'
-import './todoList.css'
-import TodoItem from './todoItem'
-import axios from 'axios'
-
+import React, { Component } from 'react'
+import 'antd/dist/antd.css'
+import store from './store'
+import * as action from './actionCreators'
+import TodoListUI from './TodoListUI'
 class TodoList extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      inputValue: '',
-      todoList: [
-        'Learning React',
-        'Learning Go'
-      ]
-    }
-    this.handleInputChange = this.handleInputChange.bind(this) 
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
+    this.state = store.getState()
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleStoreChange = this.handleStoreChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleItemDelete = this.handleItemDelete.bind(this)
 
-  componentDidMount() {
-    // axios.get('/api/todolist')
-    //   .then(() => { alert('Success')})
-    //   .catch(() => { alert('Error')})
+    store.subscribe(this.handleStoreChange)
   }
 
   render() {
     return (
-      <Fragment>
-        <div>
-          <label htmlFor="inputArea">Add a task </label>
-          <input  className='input'
-                  id="inputArea"
-                  value={this.state.inputValue}
-                  onChange={ this.handleInputChange} 
-                  ref={(input) => {this.input = input}}/>
-        <button onClick={ this.handleSubmit}>提交</button>
-        </div>
-        <ul>
-          {
-            this.state.todoList.map((item, index) => {
-              return (
-                <div>
-                    {/* <li key={ index }
-                    onClick={ this.handleItemDelete.bind(this, index)}
-                    dangerouslySetInnerHTML={{__html: item}}> 
-                    </li>*/}
-                    <TodoItem item={item} index={index} deleteItem={this.handleItemDelete.bind(this)}/>
-                </div>
-              )
-            })
-          }
-        </ul>
-      </Fragment>
+      <TodoListUI 
+          inputValue={ this.state.inputValue}
+          handleInputChange={ this.handleInputChange }
+          handleClick={ this.handleClick }
+          listData={ this.state.listData }
+          handleItemDelete={ this.handleItemDelete }
+      />
     )
   }
 
   handleInputChange(e) {
-    this.setState(() => ({
-      inputValue: this.input.value
-    }));
+    store.dispatch(action.getInputChangeAction(e.target.value))
+  } 
+
+  handleStoreChange() {
+    this.setState(store.getState())
   }
 
-  handleSubmit() {
-    this.setState((prevState) => ({
-      todoList: [...prevState.todoList, prevState.inputValue],
-      inputValue: ''
-    }))
+  handleClick() {
+    store.dispatch(action.getAddTodoItemAction())
   }
 
   handleItemDelete(index) {
-    const todoList = [...this.state.todoList]
-    todoList.splice(index, 1)
-    this.setState(() => ({
-      todoList: todoList
-    }))
+    store.dispatch(action.getDeleteTodoItemAction(index))
   }
 }
 
