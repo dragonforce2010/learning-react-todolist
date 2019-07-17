@@ -21,12 +21,13 @@ class TodoList extends Component {
     //   const data = res.data;
     //   store.dispatch(action.getInitListAction(data))
     // })
-    const data = [
-      'Learn React',
-      'Learn Electron',
-      'Learn GO'
-    ];
-    store.dispatch(action.getInitListAction(data))
+    // const data = [
+    //   'Learn React',
+    //   'Learn Electron',
+    //   'Learn GO'
+    // ];
+    // store.dispatch(action.getInitListAction(data))
+    store.dispatch(action.getTodoList())
   }
 
   render() {

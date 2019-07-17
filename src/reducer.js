@@ -7,7 +7,11 @@ import {
 
 const defaultState = {
   inputValue: 'please input a task',
-  listData: []
+  listData: [
+    'Learn React',
+    'Learn Go',
+    'Learn Electron'
+  ]
 }
 
 // reducer可以接受state，但是不能修改state
